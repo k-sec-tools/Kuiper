@@ -162,7 +162,7 @@ class ES_DB:
 
     # ================================ get max results window
     # get the setting for maximum number of records to be retrived from elasticsearch
-    def get_max_result_window(self,  indx):
+    def _get_max_result_window(self,  indx):
         settings = self.es_db.indices.get_settings(index=indx)
         settings = settings[indx]['settings']['index']
         if "max_result_window" in settings.keys():
@@ -274,7 +274,7 @@ class ES_DB:
                         
                         inc = self.es_db.indices.put_settings(index=error_index , body='{ "index" : { "max_result_window" : ' + str(max_result_window) + ' } }')
                         if inc["acknowledged"]:
-                            logger.logger(level=logger.INFO , type="elasticsearch", message="Query ["+indexname+"] result window increased to " + str(self.get_max_result_window(indexname)))
+                            logger.logger(level=logger.INFO , type="elasticsearch", message="Query ["+indexname+"] result window increased to " + str(self._get_max_result_window(indexname)))
                             if count != 0:
                                 return self.query(indexname , body , count)
                             else:
@@ -326,7 +326,7 @@ class ES_DB:
 
     # ================================ get max fields limit
     # get the total_fields.limit from settings
-    def get_total_fields_limit(self, indx):
+    def _get_total_fields_limit(self, indx):
         settings = self.es_db.indices.get_settings(index=indx)
         if 'mapping' in settings[settings.keys()[0]]['settings']['index']:
             if 'total_fields' in settings[settings.keys()[0]]['settings']['index']['mapping']:
@@ -373,7 +373,7 @@ class ES_DB:
         
         logger.logger(level=logger.DEBUG , type="elasticsearch", message="Index ["+case_id+"]: Pushing ["+str(len(bulk_queue))+"] records")
 
-        push_es = self.bulk_to_elasticsearch( bulk_queue , case_id , chunk_size )
+        push_es = self._bulk_to_elasticsearch( bulk_queue , case_id , chunk_size )
         if push_es[0]:
             logger.logger(level=logger.INFO , type="elasticsearch", message="Index ["+case_id+"]: Pushed ["+str(len(bulk_queue) - len(push_es[2]))+"] records successfully")
             return [ True , "Pushed ["+str(len(bulk_queue))+"] records" , push_es[2] , push_es[3]]
@@ -385,7 +385,7 @@ class ES_DB:
 
     # ================================ push records to elasticsearch
     # return list of records ids successed or failed
-    def bulk_to_elasticsearch(self,  bulk_queue, indx , chunk_size):    
+    def _bulk_to_elasticsearch(self,  bulk_queue, indx , chunk_size):    
         
         try:
             errors = {} # contain dictionary of failed data (origin data and error info)
@@ -415,11 +415,11 @@ class ES_DB:
                         continue
                     logger.logger(level=logger.WARNING , type="elasticsearch", message="Index ["+indx+"]: Failed pushing record: " , reason=str(data['_id']))
 
-                fixed_errors,nonfixed_errors = self.bulk_to_elasticsearch_fix_errors(indx , errors)
+                fixed_errors,nonfixed_errors = self._bulk_to_elasticsearch_fix_errors(indx , errors)
                 failed = nonfixed_errors
                 if len(fixed_errors):
                     logger.logger(level=logger.DEBUG , type="elasticsearch", message="Index ["+indx+"]: fixed issue of ["+str(len(fixed_errors))+"] records, retry to push it")
-                    repush_failed_errors = self.bulk_to_elasticsearch(fixed_errors , indx , chunk_size)
+                    repush_failed_errors = self._bulk_to_elasticsearch(fixed_errors , indx , chunk_size)
                     if repush_failed_errors[0]:
                         successed += repush_failed_errors[3]
                         failed += repush_failed_errors[2]
@@ -431,7 +431,7 @@ class ES_DB:
         # if connection timeout to elasticsearch occurred
         except elasticsearch.exceptions.ConnectionTimeout as e:
             logger.logger(level=logger.WARNING , type="elasticsearch", message="Index ["+indx+"]: Failed to push the records, retry again" , reason="Connection to Elasticsearch timeout")
-            return self.bulk_to_elasticsearch( bulk_queue, indx , chunk_size)
+            return self._bulk_to_elasticsearch( bulk_queue, indx , chunk_size)
 
 
         except Exception as e:
@@ -443,7 +443,7 @@ class ES_DB:
     # ================================ fix the errors faced during build_to_elasticsearch
     # this will recevie the failed data from bulk queue and fix it
     # it will return the list of fixed records and nonfixed records
-    def bulk_to_elasticsearch_fix_errors(self, indx, errors):
+    def _bulk_to_elasticsearch_fix_errors(self, indx, errors):
         logger.logger(level=logger.WARNING , type="elasticsearch", message="Index ["+indx+"]: Failed pushing ["+str(len(errors))+"] records [BulkIndexError], retry to fix the issue")
 
         # check the returned error for each document and try to solve it
@@ -472,7 +472,7 @@ class ES_DB:
                 
                 # === if the error is the limitation on the fields number, get the add 1000 to the limitation and try again
                 if "Limit of total fields" in doc_reason and limit_fields_increased == False:
-                    new_limit = int(self.get_total_fields_limit(indx))
+                    new_limit = int(self._get_total_fields_limit(indx))
                     new_limit = new_limit + 1000
                     inc = self.es_db.indices.put_settings(index=indx , body='{"index.mapping.total_fields.limit": '+str(new_limit)+'}')
                     
