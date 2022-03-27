@@ -91,8 +91,7 @@ app.config['TIMELINE_VIEWS_FOLDER']     = os.path.abspath( ''.join(y['Directorie
 
 app.config['DOCS_FOLDER'] 	            = os.path.abspath( ''.join(y['Directories']['docs_folder']) )	# doc folder
 
-
-  
+app.config['ES_INDEX_PATTERN'] = os.getenv('ES_INDEX_PATTERN', y['ElasticSearch']['INDEX_PATTERN'])  
  
 app.secret_key = os.getenv('FLASK_SECRET_KEY', y['Kuiper']['secret_key']) 
 # ============== logs files

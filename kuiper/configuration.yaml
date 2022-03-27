@@ -57,6 +57,7 @@ CELERY:
 ElasticSearch:
   IP    : 0.0.0.0
   PORT  : 9200
+  INDEX_PATTERN : 'kuiper-'
 
 
 # ============ MongoDB
