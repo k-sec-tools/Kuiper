@@ -81,7 +81,10 @@ def get_es():
     ip = os.getenv('ES_IP', y['ElasticSearch']["IP"])
     port = os.getenv('ES_PORT', y['ElasticSearch']['PORT'])
     index_pattern = os.getenv('ES_INDEX_PATTERN', y['ElasticSearch']['INDEX_PATTERN'])
-    return ES_DB(ip, str(port), index_pattern)
+    es_url = y['ElasticSearch']['URL']
+    es_api_key_id = y['ElasticSearch']['API_KEY_ID']
+    es_api_key = y['ElasticSearch']['API_KEY']    
+    return ES_DB(ip, str(port), index_pattern, es_url, es_api_key_id, es_api_key)
 
 
 class ES_DB:
@@ -90,12 +93,20 @@ class ES_DB:
     index_pattern = 'kuiper-'
 
     # ================================ initializer
-    def __init__(self, es_ip, es_port, index_pattern):
+    def __init__(self, es_ip, es_port, index_pattern, es_url, es_api_key_id, es_api_key):
         self.es_ip = es_ip
         self.es_port = es_port
         self.index_pattern = index_pattern
-        self.es_db = Elasticsearch(
-            'http://'+self.es_ip+':' + self.es_port, timeout=120)
+        if (es_url != '') and (es_api_key != '') and (es_api_key_id != ''):
+            self.es_db = Elasticsearch(
+                [es_url], 
+                api_key = (es_api_key_id, es_api_key), 
+                timeout = 120, 
+                verify_certs=False
+                )            
+        else:
+            self.es_db = Elasticsearch('http://'+self.es_ip+':' + self.es_port, timeout=120)    
+        
         # print inspect.getargspec(self.es_db.indices.put_settings())
         # setting
 

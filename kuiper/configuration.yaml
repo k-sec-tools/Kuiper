@@ -54,11 +54,13 @@ CELERY:
   celery_task_name:       'task.parser.kuiper'
 
 # ============ Elasticsearch
-ElasticSearch:
+ElasticSearch:  
   IP    : 0.0.0.0
   PORT  : 9200
-  INDEX_PATTERN : 'kuiper-'
-
+  INDEX_PATTERN: 'kuiper-'
+  URL: 'http://0.0.0.0:9200'
+  API_KEY_ID: ''
+  API_KEY: ''
 
 # ============ MongoDB
 MongoDB:
