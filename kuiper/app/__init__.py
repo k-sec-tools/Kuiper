@@ -53,7 +53,8 @@ celery_app.conf.worker_max_tasks_per_child=1 # terminate celery worker when done
 app.config['DB_NAME']                   = os.getenv('MONGODB_DB_NAME', y['MongoDB']['DB_NAME']) 
 app.config['DB_IP']                   	= os.getenv('MONGODB_IP', y['MongoDB']['DB_IP'])  
 app.config['DB_PORT']                   = os.getenv('MONGODB_PORT', y['MongoDB']['DB_PORT'])  
-
+app.config['DB_USER']                   = os.getenv('MONGODB_USER', y['MongoDB']['DB_USER'])
+app.config['DB_USER_PASSWORD']                   = os.getenv('MONGODB_USER_PASSWORD', y['MongoDB']['DB_USER_PASSWORD'])
 
 app.config['SIDEBAR_OPEN']              = y['adminlte']['SIDEBAR_OPEN']
 

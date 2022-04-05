@@ -67,6 +67,8 @@ MongoDB:
   DB_NAME: 'Kuiper'         # MongoDB Database name
   DB_IP: '127.0.0.1'        # MongoDB Database IP address 
   DB_PORT: 27017            # MongoDB Database Port number
+  DB_USER: ''
+  DB_USER_PASSWORD: ''
 
 
 # ============ Git
