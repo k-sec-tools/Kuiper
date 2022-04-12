@@ -9,27 +9,20 @@ import yaml
 import zipfile
 import hashlib
 import base64 
-
-
 from flask import Flask
 from flask import request, redirect, render_template, url_for, flash
 from flask import jsonify
 
 from app import app
 
-import parser_management
+from . import parser_management
+from . import case_management
 
 from app.database.dbstuff import *
 from app.database.elkdb import *
-
 from werkzeug.utils import secure_filename
 from bson import json_util
 from bson.json_util import dumps
-
-
-import case_management
-
-
 
 
 

@@ -1,3 +1,4 @@
+from importlib import reload
 import json
 import os
 import requests
@@ -22,7 +23,6 @@ y = yaml.load(open('configuration.yaml', 'r'), Loader=yaml.FullLoader)
 
 
 reload(sys)
-sys.setdefaultencoding('utf8')
 
 
 # =================================================

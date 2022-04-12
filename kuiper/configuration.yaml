@@ -78,7 +78,7 @@ Git:
 
 # ============ Logs
 Logs:
-  log_folder:   /app/files/logs/                     # store the logs folder 
+  log_folder:   ./files/logs/                     # store the logs folder 
   install_log:  Kuiper-install.log
   access_log:   Kuiper-access-gunicorn.log
   app_log:      Kuiper-flask.log
