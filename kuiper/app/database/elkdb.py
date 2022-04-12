@@ -107,7 +107,7 @@ class ES_DB:
         else:
             self.es_db = Elasticsearch('http://'+self.es_ip+':' + self.es_port, timeout=120)    
         
-        # print inspect.getargspec(self.es_db.indices.put_settings())
+        # print(inspect.getargspec(self.es_db.indices.put_settings()))
         # setting
 
     # ================================ Create Index
@@ -253,7 +253,7 @@ class ES_DB:
                     else:
                         shard_reason = shard['reason']['reason']
 
-                    print shard_reason
+                    print(shard_reason)
                     
                     # if the reason is that the field used for key is text and is not sortable, then try it sub-field ".keyword"
                     if shard_reason.startswith("Text fields are not optimised for operations that require per-document field data like aggregations and sorting, so these operations are disabled by default"):
@@ -343,7 +343,7 @@ class ES_DB:
                           message="Query ["+index_name+"] failed [ElasticsearchException]", reason=json.dumps(e.info))
             res = [False, reason]
         except Exception as e:
-            print str(e)
+            print(str(e))
             res = [False, str(e)]
             logger.logger(level=logger.ERROR, type="elasticsearch",
                           message="Query ["+index_name+"] failed [Exception]", reason=str(e))
@@ -360,7 +360,7 @@ class ES_DB:
             search_res = self.es_db.scroll(scroll_id=scroll_id, scroll=scroll)
             return [True, search_res]
         except Exception as e:
-            print str(e)
+            print(str(e))
             res = [False, str(e)]
             logger.logger(level=logger.ERROR, type="elasticsearch",
                           message="Scroll Query ID ["+scroll_id+"] failed [Exception]", reason=str(e))
@@ -809,7 +809,7 @@ class ES_DB:
             return [False, str(e)]
 
     def get_index_count(self, index):
-        # print json_beautifier( self.es_db.indices.stats(index) )
+        # print(json_beautifier( self.es_db.indices.stats(index) ))
         try:
             return [True, self.es_db.cat.count(index, params={"format": "json"})]
         except Exception as e:

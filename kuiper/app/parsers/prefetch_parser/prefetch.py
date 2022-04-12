@@ -12,7 +12,7 @@ import sys
 try:
     import pyscca  # Import pyscca, necessary from libscca
 except ImportError:
-    print "Please install libscca with Python bindings"
+    print("Please install libscca with Python bindings")
 
 
 # Parse individual file
@@ -61,7 +61,7 @@ def parse_file(pf_file,volume_information):
         return output
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
-        print "[-] [Error] " + str(exc_obj) + " - Line No. " + str(exc_tb.tb_lineno)
+        print("[-] [Error] " + str(exc_obj) + " - Line No. " + str(exc_tb.tb_lineno))
         return None
 
 

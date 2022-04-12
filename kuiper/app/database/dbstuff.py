@@ -883,9 +883,9 @@ def get_db_files():
 
 try:
     if (DB_USER != '') and (DB_USER_PASSWORD != ''):
-        MClient = MongoClient('mongodb://{DB_USER}:{DB_USER_PASSWORD}@{DB_IP}:{DB_PORT}/{DB_NAME}?authSource={DB_NAME}&authMechanism=SCRAM-SHA-256&ssl=true')
+        MClient = MongoClient('mongodb://{DB_USER}:{DB_USER_PASSWORD}@#{DB_IP}:{DB_PORT}/{DB_NAME}?authSource={DB_NAME}&authMechanism=SCRAM-SHA-256&ssl=true')
     else:
-        MClient = MongoClient('{DB_IP}:{DB_PORT}') 
+        MClient = MongoClient('{DB_IP}:{DB_PORT}')     
 except Exception as e:
     MClient = None
     logger.logger(level=logger.ERROR , type="database", message="Failed to access to MongoDB " + str(DB_IP) + ":" + str(DB_PORT) , reason=str(e))

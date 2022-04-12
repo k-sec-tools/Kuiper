@@ -165,8 +165,8 @@ def get_shellbags(shell_key):
                         "@timestamp":  date_safe_str(key.timestamp())
                     })
             except OverrunBufferException:
-                print key.path()
-                print value.name()
+                print(key.path())
+                print(value.name())
                 raise
 
             shellbag_rec(key.subkey(value.name()),
@@ -235,8 +235,8 @@ def print_shellbag_csv(shellbags, regfile):
 
 def print_shellbag_bodyfile(m, a, cr, path, fail_note=None):
     """
-    Given the MAC timestamps and a path, print a Bodyfile v3 string entry
-    formatted with the data. We print instead of returning so we can handle
+    Given the MAC timestamps and a path, print(a Bodyfile v3 string entry)
+    formatted with the data. We print(instead of returning so we can handle)
     cases where the implicit string encoding conversion takes place as
     things are written to STDOUT.
     Arguments:
@@ -244,7 +244,7 @@ def print_shellbag_bodyfile(m, a, cr, path, fail_note=None):
     - `a`: A Python datetime object representing the accessed date.
     - `cr`: A Python datetime object representing the created date.
     - `path`: A string with the entry path.
-    - `fail_note`: An alternate path to print if an encoding error
+    - `fail_note`: An alternate path to print(if an encoding error)
          is encountered.
     Throws:
     """
@@ -253,13 +253,13 @@ def print_shellbag_bodyfile(m, a, cr, path, fail_note=None):
     created = date_safe(cr)
     changed = int(calendar.timegm(datetime.datetime.min.timetuple()))
     try:
-        print u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \
+        print(u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \)
             (path, modified, accessed, changed, created)
     except UnicodeDecodeError:
-        print u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \
+        print(u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \)
             (fail_note, modified, accessed, changed, created)
     except UnicodeEncodeError:
-        print u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \
+        print(u"0|%s (Shellbag)|0|0|0|0|0|%s|%s|%s|%s" % \)
             (fail_note, modified, accessed, changed, created)
 
 
@@ -271,7 +271,7 @@ def main(argv=None):
         
     parser = argparse.ArgumentParser(description="Parse Shellbag entries from a Windows Registry.")
     parser.add_argument("-v", action="store_true", dest="vverbose",
-                        help="Print debugging information while parsing")
+                        help="print(debugging information while parsing"))
     parser.add_argument("file", nargs="+",
                         help="Windows Registry hive file(s)")
     parser.add_argument("-o", choices=["csv", "bodyfile"],

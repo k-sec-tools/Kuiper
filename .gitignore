@@ -15,3 +15,10 @@ mongodb/**
 redis/dump.rdb
 elasticsearch/**
 !elasticsearch/empty.md
+kuiper/lib/**
+kuiper/lib64/**
+kuiper/bin/**
+kuiper/files/**
+kuiper/share/
+kuiper/lib64
+pyvenv.cfg

@@ -29,7 +29,7 @@ class BagMRU():
                 else:
                     buf = sid_key.data()
                     #data = buf[::2][:buf[::2].find(b'\x00')].decode()
-                    print ("_"*100)
+                    print(("_"*100))
                     dd = RegistryHelpers.HexDump(buf)
                     print(dd)
 
@@ -40,7 +40,7 @@ class BagMRU():
                     # for i in len(data):
                     #     o = i + 2
                     #     dd = struct.unpack_from("<H", data, o)[0]
-                    #     print (dd)
+                    #     print((dd))
                         #size = block.unpack_word(offset)
                         # if size == 0:
                         #     break
@@ -48,7 +48,7 @@ class BagMRU():
                         #     pass
                         # else:
                         #     item = block.get_item(offset)
-                    #print (item)
+                    #print((item))
 
 
 

@@ -42,13 +42,13 @@ def push_to_elk(url , index , data):
 		}
 		bulk_queue.append(di)	
 
-	print 'Bulkingrecords to ES: ' + str(len(bulk_queue))
+	print('Bulkingrecords to ES: ' + str(len(bulk_queue)))
 	try:
 		helpers.bulk(es, bulk_queue)
 		return True
 	except:
 		ret = False # the value to return
-		# get the error message and print it
+		# get the error message and print(it)
 		error = sys.exc_info()
 
 # return json in a beautifier
@@ -143,7 +143,7 @@ def extract_webcachev01_dat(file_path):
 
 # places.sqlite path: C:\Users\<user-name>\AppData\Roaming\Mozilla\Firefox\Profiles\<profile-id>.default\places.sqlite 
 def extract_firefox_history(file_path):
-	#print file_path
+	#print(file_path)
 	conn = sqlite3.connect(file_path)
 	c = conn.cursor()
 	his = []
@@ -291,7 +291,7 @@ def extract_firefox_history(file_path):
 
 # History path: %LocalAppData%\Google\Chrome\User Data\Default\History
 def extract_chrome_history(file_path):
-	#print file_path
+	#print(file_path)
 	conn = sqlite3.connect(file_path)
 	c = conn.cursor()
 	his = []
@@ -442,14 +442,14 @@ elif browser == "IE":
 elif browser == "firefox":
 	h = h + extract_firefox_history(path)
 else:
-	print "[-] Make sure to specify the browser name"
+	print("[-] Make sure to specify the browser name")
 
-print json_beautifier(h)
+print(json_beautifier(h))
 
 if len(h) > 0:
 	push_to_elk( es_link , es_index , h)
 else:
-	print "[-] There are not web history to parse"
+	print("[-] There are not web history to parse")
 
 
 """

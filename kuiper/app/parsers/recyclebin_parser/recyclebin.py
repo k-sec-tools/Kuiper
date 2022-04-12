@@ -11,7 +11,7 @@ def decoding(content):
         nt_datetime = epoch + timedelta(microseconds= (nt_timestamp / 10) )
         return str(nt_datetime).replace(" ","T")
     except Exception as e:
-        print str(e)
+        print(str(e))
         return "1700-01-01T00:00:00"
 
 def main(file_path):

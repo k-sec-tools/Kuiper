@@ -46,14 +46,14 @@ def test(filename):
     with open(filename) as f:
         t = f.read()
 
-    print hex_dump(t)
+    print(hex_dump(t))
 
     l = SHITEMLIST(t, 0, False)
     for index, item in enumerate(l.items()):
-        print "item:", index
-        print "type:", item.__class__.__name__
-        print "name:", item.name()
-        print "mtime:", item.m_date()
+        print("item:", index)
+        print("type:", item.__class__.__name__)
+        print("name:", item.name())
+        print("mtime:", item.m_date())
 
 
 def main():
@@ -65,7 +65,7 @@ def main():
     with open(hive, 'rb') as f:
         m.update(f.read())
     if m.hexdigest() != "14f997a39bb131ff2a03aa3c62dc32ea":
-        print "Please use the binary file with MD5 14f997a39bb131ff2a03aa3c62dc32ea"
+        print("Please use the binary file with MD5 14f997a39bb131ff2a03aa3c62dc32ea")
         sys.exit(-1)
 
     test(hive)

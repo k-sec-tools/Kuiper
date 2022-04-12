@@ -37,14 +37,14 @@ def get_single_plugin(file,log,plugin):
                 result.write(d+"\n")
         result.close()
 
-"""print outpit for kuiper"""
+"""print(outpit for kuiper""")
 def print_for_kuiper(file,log,plugin):
     if file is not None:
         defined_f = defind_single_file_logs(file,log)
         plugins = all_plugins()
         pl1 = plugins[plugin]['function'](defined_f['hive'],defined_f['logs'])
         dd = pl1.run()
-        print (dd)
+        print((dd))
 
 """Get the main running argsparser"""
 def main(argv=None):
@@ -68,8 +68,8 @@ def main(argv=None):
         lst = []
         for plg in plugins:
             lst.append(plg)
-        print ("List of avaiable plugins:\t")
-        print ("["+",".join(lst)+"]")
+        print(("List of avaiable plugins:\t"))
+        print(("["+",".join(lst)+"]"))
 
     # parse  files with all plugin avaiable
     if args.all_plugins:
@@ -85,7 +85,7 @@ def main(argv=None):
                         if fl.endswith(".LOG") or fl.endswith(".LOG1") or fl.endswith(".LOG2"):
                             logs.append(fl)
                         get_single_plugin(fl,logs,plu)
-                        print ("[*] Parsing "+plu + " :" + fl)
+                        print(("[*] Parsing "+plu + " :" + fl))
 
     # parse single file with specific plugin
     if args.plugin and args.kuiper == False:

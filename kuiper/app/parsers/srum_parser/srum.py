@@ -436,7 +436,7 @@ class SRUM_Parser():
 			identifier_authority |= struct.unpack(">L", sid[4:8])[0]
 			sid_components.append(identifier_authority)
 			start = 8
-			#print subauthority_count.encode('hex')
+			#print(subauthority_count.encode('hex'))
 			for i in range( subauthority_count ):
 				authority = sid[start:start + 4]
 				if not authority:

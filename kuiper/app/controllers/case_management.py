@@ -19,7 +19,7 @@ from flask import send_file
 
 from app import app
 
-import parser_management
+from . import parser_management
 
 from app.database.dbstuff import *
 from app.database.elkdb import *
@@ -350,7 +350,7 @@ def export_stream_es(case_id , body, chunk_size , fields = None):
             scroll_id   = res[1]['_scroll_id'] 
             results     = res[1]['hits']['hits']
             if len(results):     
-                # print the csv header if there is a fields specified
+                # print(the csv header if there is a fields specified)
                 for rec in results: 
                     if fields is not None:   
                         # if the fields specified, export csv files
@@ -975,7 +975,7 @@ def case_browse_artifacts_ajax(case_id):
             logger.logger(level=logger.DEBUG , type="case", message="Case["+case_id+"]: Query artifacts", reason=json.dumps(body))
             res = db_es.query( case_id, body )
             if res[0] == False:
-                print res[1]   
+                print(res[1]   )
                 logger.logger(level=logger.ERROR , type="case", message="Case["+case_id+"]: Failed query artifacts from dataabase", reason=res[1])
                 return json.dumps({'res_total' : 0 , 'res_records' : [] , 'aggs' : []})
 
@@ -1029,7 +1029,7 @@ def case_browse_artifacts_ajax(case_id):
    
  
         except Exception as e:
-            print str(e)
+            print(str(e))
             logger.logger(level=logger.ERROR , type="case", message="Case["+case_id+"]: Failed getting the browser artifacts", reason=str(e))
             return json.dumps({"res_total" : 0 , "res_records" : [], 'aggs' : None})
 

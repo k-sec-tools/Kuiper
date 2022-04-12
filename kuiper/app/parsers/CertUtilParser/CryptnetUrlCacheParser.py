@@ -118,7 +118,7 @@ if __name__ == "__main__":
     parser.add_argument("-o","--output",help='The file path to write the output to (default: stdout)',default=sys.stdout)
     parser.add_argument("--outputFormat",help='The output formate (default: csv)',default="csv", choices=["csv","json","jsonl"])
     parser.add_argument("--useContent",action='store_true',help='Try finding the cached file and calculate the MD5 hash for it',default=False)
-    parser.add_argument("--noHeaders",action='store_true',help='Don\'t print headers when using CSV as the output format',default=False)
+    parser.add_argument("--noHeaders",action='store_true',help='Don\'t print(headers when using CSV as the output format',default=False))
     
     args = parser.parse_args()
 

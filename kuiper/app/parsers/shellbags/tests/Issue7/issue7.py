@@ -49,20 +49,20 @@ def test(filename):
     k = r.open("Local Settings\\Software\\Microsoft\\Windows\\Shell\\BagMRU\\1\\0\\0")
     v = k.value("0")
 
-    print hex_dump(v.value())
+    print(hex_dump(v.value()))
 
     l = SHITEMLIST(v.value(), 0, False)
     for index, item in enumerate(l.items()):
-        print "item:", index
-        print "type:", item.__class__.__name__
-        print "name:", item.name()
+        print("item:", index)
+        print("type:", item.__class__.__name__)
+        print("name:", item.name())
 
         # its a SHITEM_FILEENTRY
-        print "short name:", item.short_name()
-        print "off long name:", item._off_long_name
-        print "off long name size:", item._off_long_name_size
-        print "long name size:", hex(item.long_name_size())
-        print "mtime:", item.m_date()
+        print("short name:", item.short_name())
+        print("off long name:", item._off_long_name)
+        print("off long name size:", item._off_long_name_size)
+        print("long name size:", hex(item.long_name_size()))
+        print("mtime:", item.m_date())
 
 
 def main():
@@ -74,7 +74,7 @@ def main():
     with open(hive, 'rb') as f:
         m.update(f.read())
     if m.hexdigest() != "a83c09811f508399e1a23f674897da69":
-        print "Please use the UsrClass hive with MD5 a83c09811f508399e1a23f674897da69"
+        print("Please use the UsrClass hive with MD5 a83c09811f508399e1a23f674897da69")
         sys.exit(-1)
 
     test(hive)

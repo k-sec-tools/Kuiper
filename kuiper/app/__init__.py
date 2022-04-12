@@ -15,8 +15,9 @@ from jinja2 import TemplateNotFound
 #from flask.ext.celery import Celery
 
 # ldap authentication
-from utils.flask_simpleldap import LDAP, LDAPException
-from utils.build_timeline import buildTimeline
+
+from .utils.flask_simpleldap import LDAP, LDAPException
+from .utils.build_timeline import buildTimeline
  
 app = Flask(__name__)
   
@@ -58,13 +59,12 @@ app.config['DB_USER_PASSWORD']                   = os.getenv('MONGODB_USER_PASSW
 
 app.config['SIDEBAR_OPEN']              = y['adminlte']['SIDEBAR_OPEN']
 
-  
 # ====================== LDAP configuration 
-app.config['LDAP_ENABLED']              = os.getenv('LDAP_ENABLED', y['LDAP_auth']['enabled']).lower() in ("yes", "y", "true",  "t", "1")
+app.config['LDAP_ENABLED']              = str(os.getenv('LDAP_ENABLED', y['LDAP_auth']['enabled'])).lower() in ("yes", "y", "true",  "t", "1")
 app.config['LDAP_HOST']                 = os.getenv('LDAP_HOST', y['LDAP_auth']['LDAP_HOST']) 
 app.config['LDAP_PORT']                 = os.getenv('LDAP_PORT', y['LDAP_auth']['LDAP_PORT']) 
 app.config['LDAP_SCHEMA']               = os.getenv('LDAP_SCHEMA', y['LDAP_auth']['LDAP_SCHEMA']) 
-app.config['LDAP_USE_SSL']              = os.getenv('LDAP_USE_SSL', y['LDAP_auth']['LDAP_USE_SSL']).lower() in ("yes", "y", "true",  "t", "1")
+app.config['LDAP_USE_SSL']              = str(os.getenv('LDAP_USE_SSL', y['LDAP_auth']['LDAP_USE_SSL'])).lower() in ("yes", "y", "true",  "t", "1")
 app.config['LDAP_BASE_DN']              = os.getenv('LDAP_BASE_DN', y['LDAP_auth']['LDAP_BASE_DN'])
 app.config['LDAP_USERNAME']             = os.getenv('LDAP_USERNAME', y['LDAP_auth']['LDAP_USERNAME'])
 app.config['LDAP_PASSWORD']             = os.getenv('LDAP_PASSWORD', y['LDAP_auth']['LDAP_PASSWORD'])
@@ -76,12 +76,12 @@ if app.config['LDAP_ENABLED']:
 
 # ======================= Flask configuration
 # check whether rhaegal enabled or not
-app.config["ENABLE_RHAEGAL"]            = os.getenv('FLASK_ENABLE_RHAEGAL', y['Kuiper']['enable_Rhaegal']).lower() in ("yes", "y", "true",  "t", "1")
+app.config["ENABLE_RHAEGAL"]            = str(os.getenv('FLASK_ENABLE_RHAEGAL', y['Kuiper']['enable_Rhaegal'])).lower() in ("yes", "y", "true",  "t", "1")
 app.config['FLASK_LOGS_LEVEL']          = os.getenv('FLASK_LOGS_LEVEL', y['Kuiper']['logs_level']) 
 app.config['FLASK_API_TOKEN']           = os.getenv('FLASK_API_TOKEN', y['Kuiper']['api_token']) 
 app.config['GIT_URL_RELEASE']           = os.getenv('GIT_URL_RELEASE', y['Git']['git_url_release']) 
 app.config['GIT_KUIPER_VERSION']        = os.getenv('GIT_KUIPER_VERSION', y['Git']['k_version']) 
-app.config['FLASK_REMOVE_RAW_FILES']    = os.getenv('FLASK_REMOVE_RAW_FILES', y['Kuiper']['RemoveRawFiles']).lower() in ("yes", "y", "true",  "t", "1")
+app.config['FLASK_REMOVE_RAW_FILES']    = str(os.getenv('FLASK_REMOVE_RAW_FILES', y['Kuiper']['RemoveRawFiles'])).lower() in ("yes", "y", "true",  "t", "1")
 app.config['FLASK_CASE_SIDEBAR']        = y['case_sidebar']
 
 app.config['RHAEGAL_RULES_PATH']        = "./app/utils/Dracarys/Rhaegal/rules/"
@@ -151,7 +151,7 @@ class Logger:
         caller_line     = ins[2] #inspect.getframeinfo(ins[0].lineno)
         caller_file     = os.path.basename(ins[1])
         msg = '"%s","[%s]","%s","%s","%s","%s"' % (datetime.now() , self.level_names[level] , caller_file + "." + caller_function + "[Lin."+str(caller_line)+"]" , type, message , reason)
-        #print msg
+        #print(msg)
         self.logfile_handle.write(msg + "\n")
         self.logfile_handle.flush()
 
@@ -173,7 +173,7 @@ logger = Logger(os.path.join(logs_folder , y['Logs']['kuiper_log']) , log_level 
 
 
 
-from controllers import case_management,admin_management,API_management
+from .controllers import case_management,admin_management,API_management
    
 # redirector to the actual home page 
 @app.route('/')

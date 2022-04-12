@@ -312,13 +312,13 @@ def admin_create_case():
                 if request.form['status'] == "not_active":
                     retn_cre = db_es.close_index(case_details['casename'])
                     if retn_cre[0] == False:    
-                        print "Failed closing elasticsearch index ["+casename+"]: " + retn_cre[1]
+                        print("Failed closing elasticsearch index ["+casename+"]: " + retn_cre[1])
                         logger.logger(level=logger.ERROR , type="admin", message="Failed closing elasticsearch index ["+casename+"]" , reason=retn_cre[1])
                         return redirect(url_for('home_page', err_msg="Error: " + retn_cre[1] ))
                 elif request.form['status'] == "active":
                     retn_cre = db_es.open_index(case_details['casename'])
                     if retn_cre[0] == False:
-                        print "Failed opening elasticsearch index ["+casename+"]: " + retn_cre[1]
+                        print("Failed opening elasticsearch index ["+casename+"]: " + retn_cre[1])
                         logger.logger(level=logger.ERROR , type="admin", message="Failed opening elasticsearch index ["+casename+"]" , reason=retn_cre[1])
                         return redirect(url_for('home_page', err_msg="Error: " + retn_cre[1] ))
  
