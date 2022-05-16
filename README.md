@@ -1,6 +1,6 @@
 
 
-![logo.png](https://github.com/DFIRKuiper/Kuiper/blob/master/img/v2.0.0/logo2.png?raw=true)
+Fork from https://github.com/DFIRKuiper/Kuiper
 
 
 ## Table of Contents
