@@ -7,6 +7,7 @@ import subprocess
 import yaml
 import re
 import uuid
+import traceback
 
 import inspect
 
@@ -52,7 +53,7 @@ def json_update_val_by_path(j, p, val):
         else:
             return a
     except Exception as e:
-        return [False, str(e)]
+        return [False, f"{str(e)}, {traceback.format_exc()}"]
 
 # ================================ update json failed
 # get the value of specific
@@ -69,7 +70,7 @@ def json_get_val_by_path(j, p):
 
         return json_get_val_by_path(j[k], '.'.join(p_l[1:]))
     except Exception as e:
-        return [False, str(e)]
+        return [False, f"{str(e)}, {traceback.format_exc()}"]
 
 # =================================================
 #               Database Elasticsearch
@@ -682,7 +683,7 @@ class ES_DB:
             else:
                 return [False, "Index["+index_name+"]: Failed to update the record [" + str(doc_id) + "] : " + str(json.dumps(data))]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # ================================ add tag
     def es_add_tag(self, data, case_id):
@@ -691,7 +692,7 @@ class ES_DB:
             ins = self.es_db.index(index=index_name, body=data)
             return [True, ins]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # ================================ get record
     # get specific record by its id
@@ -701,7 +702,7 @@ class ES_DB:
             res = self.es_db.get(index=index_name, doc_type="_doc", id=record_id)
             return [True, res]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # ================================ Delete record
     # delete records by id
@@ -718,7 +719,7 @@ class ES_DB:
         except elasticsearch.NotFoundError as e:
             return [False, "NotFound: ["+index_name+"] _id["+record_id+"]"]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # ================================ Delete record
     # delete records by query
@@ -728,7 +729,7 @@ class ES_DB:
             res = self.es_db.delete_by_query(index=index_name,  body=query)
             return [True, "Indx["+index_name+"]: Deleted " + json.dumps(query)]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # ================================ Get fields mapping
     # return the fields mapping (all fields and its properties)
@@ -749,8 +750,8 @@ class ES_DB:
                 fields_list = []
 
             return [True, fields_list]
-        except Exception as e:
-            return [False, str(e)]
+        except Exception as e:                        
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     # recursive function for get_mapping_fields
 
@@ -773,12 +774,13 @@ class ES_DB:
                     r = {
                         'type':         fields[k]['type'],
                         'field_path':  current_path_tmp + k,
-                        'fields':      fields[k]['fields'].keys()[0] if 'fields' in fields[k].keys() else ''
+                        'fields':      list(fields[k]['fields'].keys())[0] if 'fields' in fields[k].keys() else ''
                     }
-                    fields_list.append(r)
+                    fields_list.append(r)   
             return [True, fields_list]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
+            
 
 
     def _get_index_name(self, case_id):
@@ -794,25 +796,25 @@ class ES_DB:
         try:
             return [True, self.es_db.nodes.info()]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     def get_indices_settings(self):
         try:
             return [True, self.es_db.indices.get_settings('*')]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     def get_indices_stats(self):
         try:
             return [True, self.es_db.indices.stats('')]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
     def get_index_count(self, index):
         # print(json_beautifier( self.es_db.indices.stats(index) ))
         try:
             return [True, self.es_db.cat.count(index, params={"format": "json"})]
         except Exception as e:
-            return [False, str(e)]
+            return [False, f"{str(e)}, {traceback.format_exc()}"]
 
 db_es = get_es()
