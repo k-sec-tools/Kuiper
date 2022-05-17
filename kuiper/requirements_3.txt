@@ -1,5 +1,5 @@
 libscca_python==20181227
-Flask==0.10.1
+Flask
 unicodecsv==0.14.1
 elasticsearch==7.6.0
 xmltodict==0.12.0

@@ -399,7 +399,7 @@ def add_timeline_view():
     if request.method == "POST":  
         try:
             logger.logger(level=logger.DEBUG , type="admin", message="Start adding/editing timeline view")
-            ajax_str =  urllib.unquote(request.data).decode('utf8')
+            ajax_str =  urllib.parse.unquote(request.data)
             ajax_j = json.loads(ajax_str)['data']
             logger.logger(level=logger.DEBUG , type="admin", message="Timeline view details: ", reason=json.dumps(ajax_j))
   
@@ -596,7 +596,7 @@ def get_timeline_views_ajax():
 @app.route('/admin/config/delete_parsers_ajax', methods=["POST"])
 def delete_parsers_ajax():
     if request.method == "POST":
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         ajax_data = json.loads(ajax_str)['data']
 
         logger.logger(level=logger.DEBUG , type="admin", message="Delete parser ["+ajax_data['parser']+"]")
@@ -624,7 +624,7 @@ def delete_parsers_ajax():
 def delete_timeline_view_ajax():
     if request.method == "POST":
         try:
-            ajax_str =  urllib.unquote(request.data).decode('utf8')
+            ajax_str =  urllib.parse.unquote(request.data)
             ajax_data = json.loads(ajax_str)['data']  
             logger.logger(level=logger.DEBUG , type="admin", message="Delete timeline view ["+ajax_data['name']+"]")
 
@@ -654,7 +654,7 @@ def delete_timeline_view_ajax():
 @app.route('/admin/add_rule', methods=["POST"])
 def admin_add_rule():
     if request.method == "POST":
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
 
         ajax_data = json.loads(ajax_str)['data']
 
@@ -676,7 +676,7 @@ def admin_add_rule():
 @app.route('/admin/delete_rule', methods=["POST"])
 def admin_delete_rule():
     if request.method == "POST":
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
 
         ajax_data = json.loads(ajax_str)['data']
         logger.logger(level=logger.DEBUG , type="admin", message="Delete rule ["+ajax_data['rule_id']+"]" )
@@ -697,7 +697,7 @@ def admin_delete_rule():
 @app.route('/admin/update_rule', methods=["POST"])
 def admin_update_rule():
     if request.method == "POST":
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
 
         ajax_data = json.loads(ajax_str)['data']
         logger.logger(level=logger.DEBUG , type="admin", message="Update rule ["+ajax_data['rule_id']+"]" )
@@ -769,7 +769,7 @@ def admin_rhaegal_edit():
     # submit edit request
     elif request.method == "POST":
 
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         
         ajax_data = json.loads(ajax_str)['data']
 
@@ -803,7 +803,7 @@ def admin_rhaegal_delete():
     
     if request.method == "POST":
 
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         
         ajax_data = json.loads(ajax_str)['data']
 
@@ -865,8 +865,3 @@ def system_health_pull2():
 
 
     return json.dumps({"result" : 'success' , 'data' : system_health})
-
-
-
-
-

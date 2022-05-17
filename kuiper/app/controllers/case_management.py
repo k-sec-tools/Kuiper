@@ -502,7 +502,7 @@ def all_machines(case_id , group_name):
 @app.route("/case/<case_id>/progress" , methods=['POST'])
 def all_machines_progress(case_id):
     if request.method == 'POST':
-        ajax_str            =  urllib.unquote(request.data).decode('utf8')
+        ajax_str            =  urllib.parse.unquote(request.data)
         machines_list       = json.loads(ajax_str)['machines_list']
         machines_progress   = []
         for machine in machines_list:
@@ -554,7 +554,7 @@ def case_disable_enable_selected_files(case_id , machine_id):
     # upload machine page
     if request.method == 'POST':
         
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         ajax_data = json.loads(ajax_str)['data']
         case = db_cases.get_case_by_id(case_id)
         # if there is no case exist
@@ -764,7 +764,7 @@ def add_group(case_id):
 def assign_to_group(case_id):
     
     if request.method == 'POST':
-        ajax_str        =  urllib.unquote(request.data).decode('utf8')
+        ajax_str        =  urllib.parse.unquote(request.data)
         machines_list   = json.loads(ajax_str)['machines_list']
         group_name      = json.loads(ajax_str)['group_name']
         res       = db_cases.assign_to_group(machines_list , group_name)
@@ -788,7 +788,7 @@ def assign_to_group(case_id):
 def deassign_from_group(case_id):
     
     if request.method == 'POST':
-        ajax_str        =  urllib.unquote(request.data).decode('utf8')
+        ajax_str        =  urllib.parse.unquote(request.data)
         machines_list   = json.loads(ajax_str)['machines_list']
         group_name      = json.loads(ajax_str)['group_name']
         res       = db_cases.deassign_from_group(machines_list , group_name)
@@ -847,7 +847,7 @@ def browse_artifacts_list_ajax(case_id):
 
     if request.method == "POST":
         try:
-            ajax_str    =  urllib.unquote(request.data).decode('utf8')
+            ajax_str    =  urllib.parse.unquote(request.data)
             ajax_data   = json.loads(ajax_str)['data']
             body = {
                 "size":30,
@@ -899,7 +899,7 @@ def case_browse_artifacts_ajax(case_id):
     if request.method == "POST": 
         try:
             records_per_page = 30
-            ajax_str =  urllib.unquote(request.data).decode('utf8')
+            ajax_str =  urllib.parse.unquote(request.data)
             ajax_data = json.loads(ajax_str)['data']
             body = {
                 "from": int(ajax_data["wanted_page"]) * records_per_page,
@@ -1073,7 +1073,7 @@ def case_browse_artifacts(case_id):
 
     if 'q' in request.args:
         try:
-            query = json.loads(urllib.unquote(request.args['q']).decode('utf-8'))
+            query = json.loads(urllib.parse.unquote(request.args['q']).decode('utf-8'))
         except Exception as e:
             pass
    
@@ -1121,7 +1121,7 @@ def browse_artifacts_export(case_id):
     if request.method == "POST":
         try:
             
-            request_str =  urllib.unquote(request.data).decode('utf8')
+            request_str =  urllib.parse.unquote(request.data)
             request_json = json.loads(request_str)['data']
                 
             logger.logger(level=logger.DEBUG , type="case", message="Case["+case_id+"]: Browse artifacts export", reason=json.dumps(request_json))
@@ -1215,7 +1215,7 @@ def case_timeline(case_id):
 def case_timeline_ajax(case_id ):
     if request.method == "POST":
         try:
-            ajax_str =  urllib.unquote(request.data).decode('utf8')
+            ajax_str =  urllib.parse.unquote(request.data)
             ajax_data = json.loads(ajax_str)['data']
 
 
@@ -1266,7 +1266,7 @@ def case_timeline_ajax(case_id ):
 @app.route('/case/<case_id>/timeline_delete_tag_ajax', methods=['POST'])
 def case_timeline_delete_tag(case_id ):
     if request.method == "POST":
-        ajax_str    =  urllib.unquote(request.data).decode('utf8')
+        ajax_str    =  urllib.parse.unquote(request.data)
         ajax_data   = json.loads(ajax_str)['data']
         logger.logger(level=logger.DEBUG , type="case", message="Case["+case_id+"]: Delete tag", reason=json.dumps(ajax_data))
 
@@ -1299,7 +1299,7 @@ def case_timeline_delete_tag(case_id ):
 @app.route('/case/<case_id>/add_tag_ajax', methods=["POST"])
 def case_add_tag_ajax(case_id):
     if request.method == "POST":
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         record_id = None
         ajax_data = json.loads(ajax_str)['data']
 
@@ -1677,7 +1677,7 @@ def graph_expand(case_id):
     if request.method == "POST":
 
 
-        ajax_str =  urllib.unquote(request.data).decode('utf8')
+        ajax_str =  urllib.parse.unquote(request.data)
         ajax_data = json.loads(ajax_str)['data']
         field = ajax_data['field']
         value = ajax_data['value']

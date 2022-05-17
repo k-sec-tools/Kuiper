@@ -31,7 +31,7 @@ from bson.json_util import dumps
 def api_get_artifacts():
     if request.method == "POST":
 
-        request_str =  urllib.unquote(request.data).decode('utf8')
+        request_str =  urllib.parse.unquote(request.data)
         request_json = json.loads(request_str)['data']
         case_id = request_json['case_id']
 
@@ -111,7 +111,7 @@ def api_system_health_update():
 
     if request.method == 'POST':
 
-        request_str =  urllib.unquote(request.data).decode('utf8')
+        request_str =  urllib.parse.unquote(request.data)
         request_json = json.loads(request_str)['data']
         
         logger.logger(level=logger.DEBUG , type="api", message="System health ["+request_json['service']+"]", reason="")

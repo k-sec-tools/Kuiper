@@ -21,4 +21,5 @@ kuiper/bin/**
 kuiper/files/**
 kuiper/share/
 kuiper/lib64
+kuiper/.venv
 pyvenv.cfg

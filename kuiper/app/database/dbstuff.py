@@ -37,9 +37,9 @@ class DB_Health:
         if MClient is None:
             self.health['connected'] = False
         else:
-            self.health['connected'] = True
-            self.health['alive'] = MClient.alive()
-            self.health['databases_exists'] = True if DB_NAME in MClient.database_names() else False
+            self.health['connected'] = True            
+            self.health['alive'] = True #MClient.alive()             
+            self.health['databases_exists'] = True if DB_NAME in MClient.list_database_names() else False
             
     
 
@@ -62,7 +62,7 @@ class DB_Groups():
         # if rules collection not exists, add it to mongoDB
         db_m = MClient[DB_NAME]
         
-        if 'groups' not in db_m.collection_names():
+        if 'groups' not in db_m.list_collection_names():
             db_m.create_collection('groups')
 
         self.MongoClient = MClient[DB_NAME]["groups"]
@@ -144,8 +144,8 @@ class DB_Cases:
     def __init__(self):
 
         # if cases collection not exists, add it to mongoDB
-        db_m = MClient[DB_NAME]
-        if 'cases' not in db_m.collection_names():
+        db_m = MClient[DB_NAME]        
+        if 'cases' not in db_m.list_collection_names():
             db_m.create_collection('cases')
 
         self.mongo_db = MClient[DB_NAME]["cases"]
@@ -378,7 +378,7 @@ class DB_Rules():
         # if rules collection not exists, add it to mongoDB
         db_m = MClient[DB_NAME]
         
-        if 'rules' not in db_m.collection_names():
+        if 'rules' not in db_m.list_collection_names():
             db_m.create_collection('rules')
 
         self.MongoClient = MClient[DB_NAME]["rules"]
@@ -471,7 +471,7 @@ class DB_Parsers:
         # if parsers collection not exists, add it to mongoDB
         db_m = MClient[DB_NAME]
         
-        if 'parsers' not in db_m.collection_names():
+        if 'parsers' not in db_m.list_collection_names():
             db_m.create_collection('parsers')
 
         self.collection = MClient[DB_NAME]["parsers"]
@@ -671,7 +671,7 @@ class DB_Files:
 
         # if files collection not exists, add it to mongoDB
         db_m = MClient[DB_NAME]
-        if 'files' not in db_m.collection_names():
+        if 'files' not in db_m.list_collection_names():
             db_m.create_collection('files')
 
         self.collection = MClient[DB_NAME]["files"]

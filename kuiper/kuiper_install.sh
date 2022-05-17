@@ -57,6 +57,9 @@ if [ "$1" == "-install" ]; then
     echo "Installing Python"
     apt install -y  python-minimal python3 python-dev libsasl2-dev libldap2-dev libssl-dev>> $LOGFILE_INSTALL 2>&1    
     apt-get install libgeos-dev
+    sudo apt install python3-gevent
+    sudo apt install python3-dev
+    sudo apt install python3.10-dev
     ERROR=$?
         if [ $ERROR -ne 0 ]; then
             echoerror "Could not install Python (Error Code: $ERROR)."
